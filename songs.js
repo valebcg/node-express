@@ -21,4 +21,30 @@ app.get("/songs", async (req, res) => {
     res.json(songs)
     });
     
-    
+ // -----agregando un nuevo elemento al Array----
+ app.post("/songs", async (req, res) => {
+    try {
+      const song = req.body;
+      if (song.titulo === "") {
+        return;
+     
+      }
+  
+      if (song.artista === "") {
+        return;
+      }
+  
+      if (song.tono === "") {
+        return;
+          }
+      const songs = JSON.parse(
+        await fsPromises.readFile("repertorio.json", "utf-8")
+      );
+      songs.push(song);
+      await fsPromises.writeFile("repertorio.json", JSON.stringify(songs));
+      res.send("Canción agregada con éxito!");
+    } catch{
+      res.send({ status: "error", data: "error interno del servidor" });
+    }
+  });
+        
