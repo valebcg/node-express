@@ -58,35 +58,3 @@ app.delete("/songs/:id", async(req, res) => {
     await fsPromises.writeFile("repertorio.json", JSON.stringify(songs)) 
     res.send("Canción eliminada con éxito")
     })
-
-    //  ----modificando el id------
-    app.put("/songs/:id", async(req, res) => {
-        try {
-        const { id } = req.params
-        const song = req.body
-        if (song.titulo === "") {
-            return;
-         
-          }
-      
-          if (song.artista === "") {
-            return;
-          }
-      
-          if (song.tono === "") {
-            return;
-              }
-        const songs = JSON.parse(await fsPromises.readFile("repertorio.json","utf8"))
-        const index = songs.findIndex(p => p.id == id) 
-        songs[index] = song
-        await fsPromises.writeFile("repertorio.json", JSON.stringify(songs)) 
-        res.send("Canción modificado con éxito");
-        }catch{
-            res.send({ status: "error", data: "error interno del servidor" });
-          }
-    })
-
-    // ----index.html----
-    app.get("/",(req, res) =>{
-        res.sendFile(__dirname + "/index.html")
-    })
