@@ -48,3 +48,13 @@ app.get("/songs", async (req, res) => {
     }
   });
         
+
+  // -----eliminando el id----
+app.delete("/songs/:id", async(req, res) => {
+    const { id } = req.params
+    const songs = JSON.parse(await fsPromises.readFile("repertorio.json","utf8"))
+    const index = songs.findIndex(p => p.id == id) 
+    songs.splice(index, 1)
+    await fsPromises.writeFile("repertorio.json", JSON.stringify(songs)) 
+    res.send("Canción eliminada con éxito")
+    })
