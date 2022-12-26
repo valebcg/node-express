@@ -86,3 +86,9 @@ app.delete("/songs/:id", async(req, res) => {
             res.send({ status: "error", data: "error interno del servidor" });
           }
     })
+
+
+    // ----index.html----
+    app.get("/",(req, res) =>{
+        res.sendFile(__dirname + "/index.html")
+    })
